@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<form id="login-form">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required>
+    <br>
+    <input type = "submit" value="create">
+</form>
+
+<script>
+
+    $("#login-form").submit(function(event) {
+        event.preventDefault();
+
+        let username = $("#username").val();
+        let password = $("#password").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/api/create",
+            data: JSON.stringify({
+                    username: username,
+                    password: password
+            }),
+            contentType: "application/json",
+            success: function (response) {
+                console.log("Login successful: ", response);
+                window.location.href = "/api/login";
+            },
+            error: function(error) {
+                console.error("Login failed: ", error);
+                window.location.href = "/api/loginn";
+            }
+        })
+    })
+</script>
+</body>
+</html>
